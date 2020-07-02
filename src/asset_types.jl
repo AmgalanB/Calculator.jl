@@ -11,6 +11,15 @@ abstract type Apartment <: Property end
 abstract type FixedIncome <: Investment end
 abstract type Equity <: Investment end
 
+# Define immutable/composite types
+struct Stock <: Equity
+    symbol::String
+    name::String
+end
+
+subtypes(Asset)
+subtypes(Equity)
+
 function subtypetree(roottype, level = 1, indent = 4)
     level == 1 && println(roottype)
     for s in subtypes(roottype)
@@ -48,3 +57,7 @@ function walking_disance(p1::Property, p2::Property)
     loc2 = location(p2)
     return abs(loc1.x - loc2.x) + abs(loc1.y - loc2.y)
 end
+
+a = Property
+b = Property
+walking_disance(a, b)
