@@ -11,12 +11,6 @@ abstract type Apartment <: Property end
 abstract type FixedIncome <: Investment end
 abstract type Equity <: Investment end
 
-# Define immutable/composite types
-struct Stock <: Equity
-    symbol::String
-    name::String
-end
-
 subtypes(Asset)
 subtypes(Equity)
 
@@ -61,3 +55,23 @@ end
 a = Property
 b = Property
 walking_disance(a, b)
+
+# Define immutable/composite types
+struct Stock <: Equity
+    symbol::String
+    name::String
+end
+
+# instatitate a composite type
+stock = Stock("AAPL", "Apple, Inc.")
+
+# implementing the contract from abstract type
+function describe(s::Stock)
+    return s.symbol * "(" * s.name * ")"
+end
+
+# It's immutable!
+#= REPL
+julia> stock.name = "Apple LLC"
+ERROR: setfield! immutable struct of type Stock cannot be changed
+=#
